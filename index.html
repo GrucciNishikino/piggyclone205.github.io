@@ -5,10 +5,11 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	</head>
-	<body>
+	<body> 
 		<div id="header">
 			<header>
 				<h2 style="padding-top:25;">Gold's Games</h2>
+				<!-- Navbar -->
 				<nav id="navbar">
 					<ul>
 						<li><a href="index.html" id="active">Home</a></li>
@@ -24,10 +25,12 @@
 						<li><a href="https://piggyclone205.github.io/TestSite">TestSite</a></li>
 					</ul>
 				</nav>
+				<!-- end of Navbar -->
 			</header>
 		</div>
 		<div class="row content">
-			<div class="main">
+			<div id="fixnavbar"></div>
+			<div class="main"> <!-- Content -->
 				<h1>Another is contributing to the repo!</h1>
 				<p>Welcome Mr. Buckley!</p>
 				<h1>TestSite is now available!</h1>
@@ -63,7 +66,7 @@
 				<p>For those who like r/ooer, you will surely recognize this style, used on Stupidity.html.</p>
 				<img src="images/tsstupid.gif" alt="Pure, unadulterated cancer." width="75%">
 				<p>A key feature of the page is that the page title is randomly chosen from a pool of 100. This pool will not be shown, but when TestSite gets its own repo, you can find it in the sea of bad code.</p>
-				<h4>The Almighty Game</h4>
+				<h4>The Almighty Game</h4> 
 				<p>I decided that I wanted to make an HTML5 Canvas game, and copied code from w3schools. I then proceeded to doctor it heavily, which made a sort of escape game. I cannot explain it without showing you, so here you go.</p>
 				<img src="images/tsgame.gif" alt="The aforementioned game, which sadly cannot be explained in an alt text." width="75%">
 				<p>The code for this game is only actually being included in the repository for TestSite so that somebody else can fix it.</p>
@@ -85,6 +88,9 @@
 				<h2>Hi! I'm PiggyClone205!</h2>
 				<p>My name will not be revealed, as that would compromise my web identity. Anyways, this is my game website.</p>
 				<p>I also have some images and audio works on this site, and you can email me through the email page! Have fun, and stay <span style=";color: #ffd700;">gold!</span></p>
+				<hr />
+				<h2>Hi! I'm Techcraft7!</h2>
+				<p>My name will also not be revealed, as with PiggyClone205.  I am just some other person contributing to this website.  I fixed a visual bug when the sticky navigation bar activates.</p>
 			</div>
 		</div>
 	</body>
@@ -94,16 +100,21 @@
 
 		// Get the navbar
 		var navbar = document.getElementById("navbar");
+		//fix annoying scrolling error
+		var fix = document.getElementById("fixnavbar");
 
 		// Get the offset position of the navbar
 		var sticky = navbar.offsetTop;
+		
 
 		// Add the sticky class to the navbar when you reach its scroll position. Remove "sticky" when you leave the scroll position
 		function myFunction() {
 			if (window.pageYOffset >= sticky) {
-				navbar.classList.add("sticky")
+				navbar.classList.add("sticky");
+				fix.style = "padding-top: " + navbar.offsetHeight + ";";
 			} else {
 				navbar.classList.remove("sticky");
+				fix.style = "margin-top: 0px;";
 			}
 		}
 	</script>

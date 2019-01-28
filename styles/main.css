@@ -73,7 +73,7 @@ body pre {
 }
 .main {
 	flex: 70%;
-	padding: 20px;
+	padding: 3.5%;
 }
 
 .dropdown {
@@ -183,4 +183,8 @@ nav ul li a:hover {
 
 .sticky + .content {
   padding-top: 60px;
+}
+
+#fixnavbar {
+  width: 100%;
 }
