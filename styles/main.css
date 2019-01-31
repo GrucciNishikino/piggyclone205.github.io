@@ -104,10 +104,6 @@ body pre {
 	text-decoration: none;
 }
 
-/* Add a red background color to navbar links on hover */
-nav ul li a:hover, .dropdown:hover .dropbtn {
-  background-color: #4CAF50;
-}
 
 /* Dropdown content (hidden by default) */
 .dropdown-content {
@@ -130,7 +126,7 @@ nav ul li a:hover, .dropdown:hover .dropbtn {
 }
 
 /* Add a grey background color to dropdown links on hover */
-.dropdown-content li a:hover {
+.dropdown-content:hover {
   background-color: #ddd;
 }
 
@@ -165,14 +161,11 @@ nav ul li a {
 	text-decoration: none;
 }
 
-nav ul li a:hover {
-	background-color: #d3d3d3;
-}
-
 #active {
 	color:#fff6f6 ;
 	background-color: #4CAF50;
 }
+
 
 .sticky {
   position: fixed;
