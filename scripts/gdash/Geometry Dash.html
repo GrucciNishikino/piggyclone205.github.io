@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body onload="startGame()">
+<script>
+function getRandomColor() {
+  var letters = '0A1B2C3D4F56789';
+  var color = '#';
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
+var myGamePiece;
+var myObstacles = [];
+var myScore;
+var myLevel;
+
+function startGame() {
+    myGamePiece = new component(30, 30, getRandomColor(), 10, 120, "player");
+    myGamePiece.gravity = 1000;
+    myScore = new component("30px", "Consolas", getRandomColor(), 10, 40, "text");
+    myLevel = new component("30px", "Consolas", getRandomColor(), 10, 80, "level");
+    myGameArea.start();
+}
+
+var myGameArea = {
+    canvas : document.createElement("canvas"),
+    start : function() {
+        this.canvas.width = 480;
+        this.canvas.height = 270;
+	this.canvas.style = "border: 3px solid" + getRandomColor() +"; background-color: " + getRandomColor()+ ";";
+        this.context = this.canvas.getContext("2d");
+        document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+        this.frameNo = 0;
+        updateGameArea();
+        },
+    clear : function() {
+        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    }
+}
+
+function component(width, height, color, x, y, type) {
+    this.type = type;
+    this.score = 0;
+    this.width = width;
+    this.prevcolor = color;
+    this.foo = 1;
+    this.height = height;
+    this.speedX = 0;
+    this.speedY = 0;    
+    this.x = x;
+    this.y = y;
+    this.gravity = 0;
+    this.gravitySpeed = 0;
+    this.level = 0;
+    this.update = function() {
+        ctx = myGameArea.context;
+        if (this.type == "text" || this.type == "level") {
+            ctx.font = this.width + " " + this.height;
+            ctx.fillStyle = this.prevcolor;
+	    this.prevcolor = ctx.fillStyle;
+	    if (this.foo == myGameArea.frameNo)
+		{
+		ctx.fillStyle = getRandomColor();
+	        this.prevcolor = ctx.fillStyle;
+		this.foo += (500 + (this.level * 100));
+		this.level += 1;
+		} else {
+		ctx.fillStyle = this.prevcolor;
+		}
+            ctx.fillText(this.text, this.x, this.y);
+        } else if(this.type == "player")
+		{
+            if (this.foo == myGameArea.frameNo)
+		{
+		ctx.fillStyle = getRandomColor();
+	        this.prevcolor = ctx.fillStyle;
+		this.foo += 50;
+		} else {
+		ctx.fillStyle = this.prevcolor;
+		
+		}
+		} else {
+		ctx.fillStyle = this.prevcolor;
+        }
+	ctx.fillRect(this.x, this.y, this.width, this.height);
+    }
+    this.newPos = function() {
+        this.gravitySpeed += this.gravity;
+        this.x += this.speedX;
+        this.y += this.speedY + this.gravitySpeed;
+        this.hitBottom();
+    }
+    this.hitBottom = function() {
+        var rockbottom = myGameArea.canvas.height - this.height;
+        var rocktop = 0;
+        if (this.y > rockbottom) {
+            this.y = rockbottom;
+            this.gravitySpeed = 0;
+        }
+	else
+	{
+		if (this.y < rocktop) {
+            this.y = rocktop;
+            this.gravitySpeed = 0;
+	}else if (myLevel.level > 1){accelerate(4/40);}else{accelerate(4/40);}
+	}
+    }
+    this.crashWith = function(otherobj) {
+        var myleft = this.x;
+        var myright = this.x + (this.width);
+        var mytop = this.y;
+        var mybottom = this.y + (this.height);
+        var otherleft = otherobj.x;
+        var otherright = otherobj.x + (otherobj.width);
+        var othertop = otherobj.y;
+        var otherbottom = otherobj.y + (otherobj.height);
+        var crash = true;
+        if ((mybottom < othertop) || (mytop > otherbottom) || (myright < otherleft) || (myleft > otherright)) {
+            crash = false;
+        }
+	else
+	{
+	     alert(myGameArea.frameNo);
+		 location.reload();
+	}	
+        return crash;
+    }
+}
+
+function updateGameArea() {
+    var x, height, gap, minHeight, maxHeight, minGap, maxGap;
+    for (i = 0; i < myObstacles.length; i += 1) {
+        if (myGamePiece.crashWith(myObstacles[i])) {
+            return;
+        } 
+    }
+    myGameArea.clear();
+    myGameArea.frameNo += 1;
+    if (myGameArea.frameNo == 1 || everyinterval(750/myLevel.level)) {
+        x = myGameArea.canvas.width;
+        minHeight = 20 - myLevel.level;
+        maxHeight = 50;
+        height = Math.floor(Math.random()*(maxHeight-minHeight+2)+minHeight);
+        minGap = 200;
+        maxGap = 230;
+        gap = Math.floor(Math.random()*(maxGap-minGap)+minGap);
+        myObstacles.push(new component(15, x - height - gap, getRandomColor(), x, height + gap));
+        myObstacles.push(new component(15, x - height - gap, getRandomColor(), x, height + gap));
+    }
+    for (i = 0; i < myObstacles.length; i += 1) {
+        myObstacles[i].x += (myLevel.level * -0.7);
+        myObstacles[i].update();
+    }
+    myScore.text="SCORE: " +  myGameArea.frameNo;
+    myLevel.text="LEVEL: " + myLevel.level;
+    myLevel.update();
+    myScore.update();
+    myGamePiece.newPos();
+    myGamePiece.update();
+}
+
+function everyinterval(n) {
+    if ((myGameArea.frameNo / n) % 1 == 0) {return true;}
+    return false;
+}
+
+function accelerate(n) {
+    if (!myGameArea.interval) {myGameArea.interval = setInterval(updateGameArea, 15);}
+
+    myGamePiece.gravity = n;
+}
+
+
+function jump()
+{
+	if (myGamePiece.y == 240)
+	{
+		if (myLevel.level > 1)
+		{
+			accelerate(-4);
+		}else{
+			accelerate(-4);
+		}
+	}
+}
+accelerate(0);
+</script>
+<br>
+<button onclick="jump()">Jump!</button>
+<br>
+<div class="foo"></div>
+<a href="../../pages/games.html">Back to Gold's Games</a>
+</body>
+</html>
