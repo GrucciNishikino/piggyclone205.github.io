@@ -20,3 +20,5 @@
 				fix.style = "margin-top: 0px;";
 			}
 		}
+var title = document.getElementById("titlehead");
+title.classList.remove("parahead");
