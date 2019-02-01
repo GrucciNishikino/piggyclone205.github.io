@@ -27,34 +27,14 @@
 			</header>
 		</div>
 		<div class="row content">
+			<div id="fixnavbar"></div>
 			<div class="main">
 			
 			<img src="../images/thenegotiator.PNG" width="75%">
 			</div>
-			<div class="side">
-				<h2>Hi! I'm PiggyClone205!</h2>
-				<p>My name will not be revealed, as that would compromise my web identity. Anyways, this is my game website.</p>
-				<p>I also have some images and audio works on this site, and you can email me through the email page! Have fun, and stay <span style=";color: #ffd700;">gold!</span></p>
-			</div>
+			<embed src="../embed/sidebar.html" style="height: 100%;">
 		</div>
 	</body>
-	<script>
-		// When the user scrolls the page, execute myFunction 
-		window.onscroll = function() {myFunction()};
-
-		// Get the navbar
-		var navbar = document.getElementById("navbar");
-
-		// Get the offset position of the navbar
-		var sticky = navbar.offsetTop;
-
-		// Add the sticky class to the navbar when you reach its scroll position. Remove "sticky" when you leave the scroll position
-		function myFunction() {
-			if (window.pageYOffset >= sticky) {
-				navbar.classList.add("sticky")
-			} else {
-				navbar.classList.remove("sticky");
-			}
-		}
+	<script src="../scripts/navbar.js">
 	</script>
 </html>
