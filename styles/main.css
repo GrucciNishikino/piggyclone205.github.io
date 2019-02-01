@@ -73,7 +73,7 @@ body pre {
 }
 .main {
 	flex: 70%;
-	padding: 3.5%;
+	padding: 20px;
 }
 
 .dropdown {
@@ -127,7 +127,7 @@ body pre {
 }
 
 /* Add a grey background color to dropdown links on hover */
-.dropdown-content:hover {
+.dropdown-content li a:hover {
   background-color: #ddd;
 }
 
@@ -160,6 +160,10 @@ nav ul li a {
 	text-align: center;
 	padding: 14px 16px;
 	text-decoration: none;
+}
+
+nav ul li a:hover {
+	background-color: #d3d3d3;
 }
 
 #active {
