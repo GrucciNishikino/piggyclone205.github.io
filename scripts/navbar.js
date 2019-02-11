@@ -14,11 +14,22 @@
 		function myFunction() {
 			if (window.pageYOffset >= sticky) {
 				navbar.classList.add("sticky");
+				navbar.classList.remove("static");
 				fix.style = "padding-top: " + navbar.offsetHeight + ";";
 			} else {
 				navbar.classList.remove("sticky");
+				navbar.classList.add("static");
 				fix.style = "margin-top: 0px;";
 			}
+			var windowScroll = this.scrollY; 
+
+			var $logo = document.getElementsByClassName('logo')[0];
+			$logo.style.transform = 'translateY(' + windowScroll/2 + '%)';
+
+			var $backBird = document.getElementsByClassName('parbg')[0];
+			$backBird.style.transform = 'translateY(' + windowScroll/4 + '%)';
+
+			var $foreBird = document.getElementsByClassName('parfg	')[0];
+			$foreBird.style.transform = 'translateY(-' + windowScroll/100 + '%)';
 		}
-var title = document.getElementById("titlehead");
-title.classList.remove("parahead");
+		window.addEventListener('scroll', scrollFunc);
